@@ -1,18 +1,18 @@
-##auth api for users with operation *get* *post* *put* *delete*
+## auth api for users with operation *get* *post* *put* *delete*
 
-:noteId as params
+*noteId as params*
 
 1. Make new user
-*POST /users*
+`POST /users`
 
 2. Retrieve all users
-*GET /users*
+`GET /users`
 
 3. Retrieve one user
-*PUT /users/:userId*
+`*PUT /users/:userId`
 
 4. update user
-*PUT /users/:userId*
+`PUT /users/:userId`
 
 5. deleting an user
-*DELETE /users/:userId*
+`DELETE /users/:userId`
