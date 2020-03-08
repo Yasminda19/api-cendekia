@@ -26,6 +26,9 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
+// Require users routes
+require('./app/users/cendekia.routes.js')(app);
+
 // define a simple route
 app.get('/', (req, res) => {
     res.json({"message": "connected."});
