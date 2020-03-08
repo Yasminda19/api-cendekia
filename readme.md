@@ -1,6 +1,6 @@
 ## auth api for users with operation *get* *post* *put* *delete*
 
-*noteId as params*
+*userId as params*
 
 1. Make new user
 `POST /users`
