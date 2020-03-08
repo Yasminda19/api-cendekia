@@ -1,114 +1,118 @@
-const user = require('../models/cendekia.model.js');
+var AuthController = require('./auth/AuthController');
+app.use('/api/auth', AuthController);
+module.exports = app;
 
-// Create and Save a new users
+const something = require('../models/cendekia.model.js');
+
+// Create and Save a new somethings
 exports.create = (req, res) => {
     // Validate request
     if(!req.body.content) {
         return res.status(400).send({
-            message: "user content can not be empty"
+            message: "something content can not be empty"
         });
     }
 
-    // Create a user
-    const user = new user({
-        title: req.body.title || "user created",
+    // Create a something
+    const something = new something({
+        title: req.body.title || "something created",
         content: req.body.content
     });
 
-    // Save user
-    user.save()
+    // Save something
+    something.save()
     .then(data => {
         res.send(data);
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while creating the user."
+            message: err.message || "Some error occurred while creating the something."
         });
     });
 
-// Retrieve and return all users from the database.
+// Retrieve and return all somethings from the database.
 exports.findAll = (req, res) => {
-    user.find()
-    .then(users => {
-        res.send(users);
+    something.find()
+    .then(somethings => {
+        res.send(somethings);
     }).catch(err => {
         res.status(500).send({
-            message: err.message || "Some error occurred while retrieving users."
+            message: err.message || "Some error occurred while retrieving somethings."
         });
     });
 };
-// Find a single user with a userId
+// Find a single something with a somethingId
 exports.findOne = (req, res) => {
-    user.findById(req.params.userId)
-    .then(user => {
-        if(!user) {
+    something.findById(req.params.somethingId)
+    .then(something => {
+        if(!something) {
             return res.status(404).send({
-                message: "user not found with id " + req.params.userId
+                message: "something not found with id " + req.params.somethingId
             });
         }
-        res.send(user);
+        res.send(something);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "user not found with id " + req.params.userId
+                message: "something not found with id " + req.params.somethingId
             });
         }
         return res.status(500).send({
-            message: "Error retrieving user with id " + req.params.userId
+            message: "Error retrieving something with id " + req.params.somethingId
         });
     });
 };
 
-// Update an user identified by the userId in the request
+// Update an something identified by the somethingId in the request
 exports.update = (req, res) => {
     // Validate Request
     if(!req.body.content) {
         return res.status(400).send({
-            message: "user content can not be empty"
+            message: "something content can not be empty"
         });
     }
 
-    // Find user and update it with the request body
-    user.findByIdAndUpdate(req.params.userId, {
-        title: req.body.title || "Untitled user",
+    // Find something and update it with the request body
+    something.findByIdAndUpdate(req.params.somethingId, {
+        title: req.body.title || "Untitled something",
         content: req.body.content
     }, {new: true})
-    .then(user => {
-        if(!user) {
+    .then(something => {
+        if(!something) {
             return res.status(404).send({
-                message: "user not found with id " + req.params.userId
+                message: "something not found with id " + req.params.somethingId
             });
         }
-        res.send(user);
+        res.send(something);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "user not found with id " + req.params.userId
+                message: "something not found with id " + req.params.somethingId
             });
         }
         return res.status(500).send({
-            message: "Error updating user with id " + req.params.userId
+            message: "Error updating something with id " + req.params.somethingId
         });
     });
 };
 
-// Delete a user with the specified userId in the request
+// Delete a something with the specified somethingId in the request
 exports.delete = (req, res) => {
-    user.findByIdAndRemove(req.params.userId)
-    .then(user => {
-        if(!user) {
+    something.findByIdAndRemove(req.params.somethingId)
+    .then(something => {
+        if(!something) {
             return res.status(404).send({
-                message: "user not found with id " + req.params.userId
+                message: "something not found with id " + req.params.somethingId
             });
         }
-        res.send({message: "user deleted successfully!"});
+        res.send({message: "something deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
-                message: "user not found with id " + req.params.userId
+                message: "something not found with id " + req.params.somethingId
             });
         }
         return res.status(500).send({
-            message: "Could not delete user with id " + req.params.userId
+            message: "Could not delete something with id " + req.params.somethingId
         });
     });
 };
