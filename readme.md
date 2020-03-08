@@ -28,3 +28,6 @@
 
 2. logout
 *GET /app/auth/logout*
+
+wait did they actually are going to use this, arent we supposed to have different non integrated app as modules thingg
+wait i just realised they actually call that miniscule service.
