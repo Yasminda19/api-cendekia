@@ -1,6 +1,4 @@
-module.exports = app;
-
-const user = require('../models/user');
+const User = require('../models/user');
 
 exports.register = async (req, res) => {
     // Create a new user
@@ -14,7 +12,7 @@ exports.register = async (req, res) => {
     }
 };
 
-exports.login = async(req, res) => {
+exports.login = async (req, res) => {
     //Login a registered user
     try {
         const { email, password } = req.body

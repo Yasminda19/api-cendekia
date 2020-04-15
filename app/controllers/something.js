@@ -1,5 +1,3 @@
-module.exports = app;
-
 const something = require('../models/something');
 
 // Create and Save a new somethings

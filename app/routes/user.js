@@ -1,9 +1,6 @@
-const User = require('../models/user')
 const auth = require('../middleware/auth')
 const user = require('../controllers/user');
 
-/api/auth/login
-/api/auth/logout
 module.exports = (app) => {
     app.post('/api/auth/register', user.register)
     app.put('/api/auth', user.register) // alias?
