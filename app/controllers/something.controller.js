@@ -2,7 +2,7 @@ var AuthController = require('./auth/AuthController');
 app.use('/api/auth', AuthController);
 module.exports = app;
 
-const something = require('../models/cendekia.model.js');
+const something = require('../models/something.model.js');
 
 // Create and Save a new somethings
 exports.create = (req, res) => {

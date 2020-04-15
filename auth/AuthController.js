@@ -73,5 +73,6 @@ router.get('/me', VerifyToken, function(req, res, next) {
 
     res.status(200).send(user);
   });
+}
 
 module.exports = router;

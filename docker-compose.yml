@@ -1,0 +1,36 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo:bionic
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: devroot
+      MONGO_INITDB_ROOT_PASSWORD: devroot
+      MONGO_INITDB_DATABASE: cendekia
+  mongo-express:
+    image: mongo-express
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: 'true'
+      ME_CONFIG_MONGODB_ADMINUSERNAME: devroot
+      ME_CONFIG_MONGODB_ADMINPASSWORD: devroot
+      ME_CONFIG_MONGODB_AUTH_DATABASE: cendekia
+      ME_CONFIG_MONGODB_AUTH_USERNAME: devroot
+      ME_CONFIG_MONGODB_AUTH_PASSWORD: devroot
+      ME_CONFIG_BASICAUTH_USERNAME: dev
+      ME_CONFIG_BASICAUTH_PASSWORD: dev
+    depends_on:
+      - mongo
+    ports:
+      - "8000:8081"
+  dev:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    command: npm start
+  # auth:
