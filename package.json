@@ -1,10 +1,11 @@
 {
   "name": "api-cendekia",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start.dev": "nodemon",
+    "start": "node server"
   },
   "author": "meno",
   "license": "ISC",
@@ -15,5 +16,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.3",
     "validator": "^13.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }

@@ -11,13 +11,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // Configuring the database
-const dbConfig = require('./config/database.config.js');
+const config = require('./config');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
-mongoose.connect(dbConfig.url, {
+mongoose.connect(config.dburl, {
     useNewUrlParser: true
 }).then(() => {
     console.log("Successfully connected to the database");
@@ -27,8 +27,8 @@ mongoose.connect(dbConfig.url, {
 });
 
 // Require users routes
-// require('./app/routes/something.routes.js')(app);
-require('./app/routes/user.routes.js')(app);
+// require('./app/routes/something')(app);
+require('./app/routes/user')(app);
 
 // define a simple route
 app.get('/', (req, res) => {

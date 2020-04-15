@@ -21,13 +21,13 @@
 ### oh i also made auth token or something like that, with *register* *login* and *logout* endpoints. perhaps someone actually do it.
 
 1. login
-*POST /app/auth/login*
+*POST /api/auth/login*
 
 2. register
-*POST /app/auth/register*
+*POST /api/auth/register*
 
 2. logout
-*GET /app/auth/logout*
+*GET /api/auth/logout*
 
 wait did they actually are going to use this, arent we supposed to have different non integrated app as modules thingg
 wait i just realised they actually call that miniscule service.

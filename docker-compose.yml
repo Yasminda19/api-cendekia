@@ -32,5 +32,7 @@ services:
       - /usr/src/app/node_modules
     ports:
       - 3000:3000
+    environment:
+      JWT_KEY: anjirlahkenapagajalanjalan
     command: npm start
   # auth:
