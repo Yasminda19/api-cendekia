@@ -22,7 +22,7 @@ const uri =
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
-// just change the 'dbConfig' to 'uri' if you want run locally
+// just change the 'uri' to 'dbConfig' if you want run locally or on atlas
 mongoose
   .connect(uri, {
     useNewUrlParser: true,
