@@ -14,13 +14,13 @@ module.exports = (app) => {
     res.send(req.user);
   });
 
-  app
-    .route("/api/auth/forgot_password")
-    .get(user.render_forgot_password_template)
-    .post(user.forgot_password);
+  // app
+  //   .route("/api/auth/forgot_password")
+  //   .get(user.render_forgot_password_template)
+  //   .post(user.forgot_password);
 
-  app
-    .route("/api/auth/reset_password")
-    .get(user.render_reset_password_template)
-    .post(user.reset_password);
+  // app
+  //   .route("/api/auth/reset_password")
+  //   .get(user.render_reset_password_template)
+  //   .post(user.reset_password);
 };
