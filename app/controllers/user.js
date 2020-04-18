@@ -6,8 +6,6 @@ const User = require("../models/user");
 //   async = require("async"),
 //   crypto = require("crypto"),
 //   _ = require("lodash"),
-//   email = process.env.MAILER_EMAIL_ID || "munaezii@gmail.com",
-//   pass = process.env.MAILER_PASSWORD || "Blackblues4m";
 
 exports.register = async (req, res) => {
   // Create a new user
