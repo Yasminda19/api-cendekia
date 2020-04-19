@@ -33,12 +33,12 @@ const userSchema = mongoose.Schema({
       },
     },
   ],
-  // reset_password_token: {
-  //   type: String,
-  // },
-  // reset_password_expires: {
-  //   type: Date,
-  // },
+  reset_password_token: {
+    type: String,
+  },
+  reset_password_expires: {
+    type: Date,
+  },
 });
 
 userSchema.pre("save", async function (next) {
