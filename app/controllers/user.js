@@ -77,8 +77,8 @@ exports.logoutall = async (req, res) => {
 var smtpTransport = nodemailer.createTransport({
   service: "Gmail",
   auth: {
-    user: "munaezii@gmail.com",
-    pass: "Blackblues4m",
+    user: "dummyscb@gmail.com",
+    pass: "psbo12345",
   },
 });
 
@@ -143,7 +143,7 @@ exports.reset_password = async function (req, res, next) {
           } else {
             var data = {
               to: user.email,
-              from: "munaezii@gmail.com",
+              from: "dummyscb@gmail.com",
               template: "reset-password-email",
               subject: "Password Reset Confirmation",
               context: {
@@ -216,7 +216,7 @@ exports.forgot_password = function (req, res) {
       function (token, user, done) {
         var data = {
           to: user.email,
-          from: "munaezii@gmail.com",
+          from: "dummyscb@gmail.com",
           template: "forgot-password-email",
           subject: "Password help has arrived!",
           context: {
