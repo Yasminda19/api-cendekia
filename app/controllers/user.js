@@ -27,16 +27,24 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   //Login a registered user
   try {
+    console.log(req.body);
     const { email, password } = req.body;
+    hashPassword = await bcrypt.hash(req.body.password, 8);
+    console.log(hashPassword);
     const user = await User.findByCredentials(email, password);
+    console.log(user);
     if (!user) {
       return res
         .status(401)
         .send({ error: "Login failed! Check authentication credentials" });
     }
+    console.log(user.token);
     const token = await user.generateAuthToken();
+    console.log(token);
+    console.log(user.token);
     res.send({ user, token });
   } catch (error) {
+    console.log(error);
     res.status(400).send(error);
   }
 };
@@ -105,21 +113,29 @@ exports.render_reset_password_template = function (req, res) {
   );
 };
 
-exports.reset_password = function (req, res, next) {
-  User.findOne({
+exports.reset_password = async function (req, res, next) {
+  console.log(req.body);
+  const user = await User.findOne({
     reset_password_token: req.body.token,
-    reset_password_expires: {
-      $gt: Date.now(),
-    },
+    // reset_password_expires: {
+    //   $gt: Date.now(),
+    // },
+    // await console.log(user);
   }).exec(function (err, user) {
-    if (!err && user) {
+    if (!err) {
+      console.log("just got in !err");
+      console.log("--------------------------------------------------------");
+      console.log(user);
       if (req.body.newPassword === req.body.verifyPassword) {
-        user.hash_password = bcrypt.hashSync(req.body.newPassword, 10);
+        console.log("inside req.body.newPassword === req.body.verifyPassword");
+        console.log("--------------------------------------------------------");
+        console.log(user);
+        user.password = req.body.newPassword;
         user.reset_password_token = undefined;
         user.reset_password_expires = undefined;
         user.save(function (err) {
           if (err) {
-            console.log("in sendmail");
+            console.log("in failed to save");
             console.log(err);
             return res.status(422).send({
               message: err,
@@ -135,11 +151,11 @@ exports.reset_password = function (req, res, next) {
               },
             };
 
-            smtpTransport.sendMail(data, function (err) {
+            smtpTransport.sendMail(data, function (err, done) {
               if (!err) {
                 return res.json({ message: "Password reset" });
               } else {
-                console.log("in sendmail");
+                console.log("in send mail doesnt success");
                 console.log(err);
                 return done(err);
               }
@@ -147,11 +163,16 @@ exports.reset_password = function (req, res, next) {
           }
         });
       } else {
+        console.log("in 422");
+        console.log(err);
         return res.status(422).send({
           message: "Passwords do not match",
         });
       }
     } else {
+      console.log("in 400");
+      console.log(err);
+      console.log(user);
       return res.status(400).send({
         message: "Password reset token is invalid or has expired.",
       });
@@ -185,7 +206,7 @@ exports.forgot_password = function (req, res) {
           { _id: user._id },
           {
             reset_password_token: token,
-            reset_password_expires: Date.now() + 86400000,
+            reset_password_expires: Date.now() + 60 * 60,
           },
           { upsert: true, new: true }
         ).exec(function (err, new_user) {
