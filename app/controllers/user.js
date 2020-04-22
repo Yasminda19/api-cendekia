@@ -6,11 +6,6 @@ var hbs = require("nodemailer-express-handlebars"),
   async = require("async"),
   crypto = require("crypto"),
   _ = require("lodash");
-// // we should create env for this
-// this is for the scb admin email and pass
-//email = process.env.MAILER_EMAIL_ID
-// pass = process.env.MAILER_PASSWORD || 'auth_email_pass'
-// service = process.env.MAILER_SERVICE_PROVIDER || 'Gmail'
 
 exports.register = async (req, res) => {
   // Create a new user
@@ -27,21 +22,15 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   //Login a registered user
   try {
-    console.log(req.body);
     const { email, password } = req.body;
     hashPassword = await bcrypt.hash(req.body.password, 8);
-    console.log(hashPassword);
     const user = await User.findByCredentials(email, password);
-    console.log(user);
     if (!user) {
       return res
         .status(401)
         .send({ error: "Login failed! Check authentication credentials" });
     }
-    console.log(user.token);
     const token = await user.generateAuthToken();
-    console.log(token);
-    console.log(user.token);
     res.send({ user, token });
   } catch (error) {
     console.log(error);
@@ -123,13 +112,7 @@ exports.reset_password = async function (req, res, next) {
     // await console.log(user);
   }).exec(function (err, user) {
     if (!err) {
-      console.log("just got in !err");
-      console.log("--------------------------------------------------------");
-      console.log(user);
       if (req.body.newPassword === req.body.verifyPassword) {
-        console.log("inside req.body.newPassword === req.body.verifyPassword");
-        console.log("--------------------------------------------------------");
-        console.log(user);
         user.password = req.body.newPassword;
         user.reset_password_token = undefined;
         user.reset_password_expires = undefined;
@@ -155,24 +138,17 @@ exports.reset_password = async function (req, res, next) {
               if (!err) {
                 return res.json({ message: "Password reset" });
               } else {
-                console.log("in send mail doesnt success");
-                console.log(err);
                 return done(err);
               }
             });
           }
         });
       } else {
-        console.log("in 422");
-        console.log(err);
         return res.status(422).send({
           message: "Passwords do not match",
         });
       }
     } else {
-      console.log("in 400");
-      console.log(err);
-      console.log(user);
       return res.status(400).send({
         message: "Password reset token is invalid or has expired.",
       });
@@ -226,16 +202,11 @@ exports.forgot_password = function (req, res) {
         };
 
         smtpTransport.sendMail(data, function (err) {
-          console.log("in sendmail");
-          console.log(data);
-
           if (!err) {
             return res.json({
               message: "Kindly check your email for further instructions",
             });
           } else {
-            console.log("in sendmail");
-            console.log(err);
             return done(err);
           }
         });
