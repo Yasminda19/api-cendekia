@@ -35,6 +35,7 @@ mongoose
 // Require users routes
 // require('./app/routes/something')(app);
 require("./app/routes/user")(app);
+require("./app/routes/post")(app);
 
 // define a simple route
 app.get("/", (req, res) => {
