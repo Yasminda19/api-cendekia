@@ -1,21 +1,27 @@
-const mongoose = require ('mongoose');
+const mongoose = require("mongoose");
 
-const PostSchema = mongoose.Schema ({
-     
-    title: {
-        type: String,
-        required: true,
-    },
-    content: {
-        type: String,
-        required: true,
-    },
-    Publish_date: { 
-        type: Date, 
-        default: Date.now 
-    },
-       
-})
-    {timestamps: true}
-;
-module.exports = mongoose.model('Post', PostSchema);
+const PostSchema = mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  publishDate: {
+    type: Date,
+    default: Date.now,
+  },
+  createdBy: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "User",
+    required: true,
+  },
+});
+{
+  timestamps: true;
+}
+PostSchema.index({ user: 1, name: 1 }, { unique: true });
+
+module.exports = mongoose.model("Post", PostSchema);
