@@ -4,6 +4,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const userSchema = mongoose.Schema({
+  isAdmin: {
+    type: Boolean,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["Siswa", "Tendik", "Guru", "Staff"],
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -23,7 +32,7 @@ const userSchema = mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minLength: 7,
+    min: 8,
   },
   tokens: [
     {

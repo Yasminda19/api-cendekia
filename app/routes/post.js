@@ -6,10 +6,10 @@ module.exports = (app) => {
   app.post("/api/auth/post", auth, post.create);
 
   //Mengambil semua data /retieve all post
-  app.get("/api/auth/post", auth, post.findAll);
+  app.get("/api/auth/post", post.findAll);
 
   //Mengambil satu data post denga postId
-  app.get("/api/auth/post/:postId", auth, post.findOne);
+  app.get("/api/auth/post/:postId", post.findOne);
 
   //Mengupdate post dengan postId
   app.put("/api/auth/post/:postId", auth, post.update);

@@ -3,9 +3,7 @@ const Post = require("../models/post");
 // Membuat fungsi buat dan save post baru
 exports.create = (req, res) => {
   // Validate request
-  console.log(req);
-
-  userId = req.user.id;
+  userId = req.user._id;
   if (!req.body.content) {
     return res.status(400).send({
       message: "Post content tidak boleh kosong",
@@ -129,7 +127,7 @@ exports.delete = (req, res) => {
 };
 
 exports.findAllByUserId = (req, res) => {
-  Post.findOne(req.user._id)
+  Post.findById(req.user._id)
     .then((post) => {
       if (!post) {
         return res.status(404).send({
