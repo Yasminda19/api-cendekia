@@ -14,6 +14,7 @@ exports.create = (req, res) => {
   const post = new Post({
     title: req.body.title || "Untitled Post",
     content: req.body.content,
+    category: req.body.category,
     createdBy: userId,
   });
 

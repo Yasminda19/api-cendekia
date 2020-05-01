@@ -6,12 +6,12 @@ const jwt = require("jsonwebtoken");
 const userSchema = mongoose.Schema({
   isAdmin: {
     type: Boolean,
-    required: true,
+    //required: true,
   },
   role: {
     type: String,
     enum: ["Siswa", "Tendik", "Guru", "Staff"],
-    required: true,
+    //required: true,
   },
   name: {
     type: String,
