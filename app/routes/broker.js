@@ -1,5 +1,5 @@
 const auth = require('../middleware/auth')
-const user = require('../controllers/user');
+const broker = require('../controllers/broker')
 
 module.exports = (app) => {
     app.post('/api/auth/register', user.register)
