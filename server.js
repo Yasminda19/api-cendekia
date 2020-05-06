@@ -30,8 +30,8 @@ mongoose.set('useFindAndModify', false);
 
 // Require users routes
 // require('./app/routes/something')(app);
-require('./app/routes/user')(app);
-require('./app/routes/broker')(app);
+app.use('/api', require('./app/routes/user'));
+app.use('/api', require('./app/routes/broker'));
 
 // define a simple route
 app.get('/', (req, res) => {
