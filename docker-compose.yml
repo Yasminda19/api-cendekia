@@ -35,5 +35,4 @@ services:
     environment:
       DATABASE_URI: mongodb://devroot:devroot@mongo:27017/admin
       JWT_KEY: anjirlahkenapagajalanjalan
-    command: npm start
   # auth:
