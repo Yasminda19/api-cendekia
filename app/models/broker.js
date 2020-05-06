@@ -5,7 +5,6 @@ const brokerSchema = mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true,
         lowercase: true
     },
     url: {
@@ -13,6 +12,7 @@ const brokerSchema = mongoose.Schema({
         required: true,
     },
     token: {
+        unique: true,
         type: String,
         required: true
     }

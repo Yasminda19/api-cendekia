@@ -26,6 +26,8 @@ mongoose.connect(config.dburl, {
     process.exit();
 });
 
+mongoose.set('useFindAndModify', false);
+
 // Require users routes
 // require('./app/routes/something')(app);
 require('./app/routes/user')(app);
