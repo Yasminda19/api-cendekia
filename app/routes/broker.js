@@ -1,15 +1,19 @@
-const auth = require('../middleware/auth')
+const express = require('express')
+
+const router = express.Router()
+
 const broker = require('../controllers/broker')
 
-module.exports = (app) => {
-    app.get('/api/broker', broker.getAll)
+router.route('/broker')
+    .get(broker.getAll)
+    .put('/broker', broker.create)
+    .post('/broker', broker.create);
 
-    app.put('/api/broker', broker.create)
-    app.post('/api/broker', broker.create)
+router.route('/broker/:id')
+    .get('/broker/:id', broker.getOne)
+    .delete('/broker/:id', broker.remove)
+    .patch('/broker/:id', broker.update);
 
-    app.get('/api/broker/:id', broker.getOne)
-    app.delete('/api/broker/:id', broker.remove)
-    app.patch('/api/broker/:id', broker.update)
+router.patch('/broker/:id/token', broker.generateNewToken)
 
-    app.patch('/api/broker/:id/token', broker.generateNewToken)
-}
+module.exports = router

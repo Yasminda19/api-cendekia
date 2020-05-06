@@ -1,18 +1,21 @@
+const express = require('express')
+
+const router = express.Router()
+
 const auth = require('../middleware/auth')
 const user = require('../controllers/user');
 
-module.exports = (app) => {
-    app.post('/api/auth/register', user.register)
-    app.put('/api/auth', user.register) // alias?
 
-    app.post('/api/auth/login', user.login)
-    app.post('/api/auth/logout', auth, user.logout)
-    app.post('/api/auth/logoutall', auth, user.logoutall)
+router.post('/auth/register', user.register)
+router.put('/auth', user.register) // alias?
 
-    app.post('/api/auth/verifyToken', auth, )
+router.post('/auth/login', user.login)
+router.post('/auth/logout', auth, user.logout)
+router.post('/auth/logoutall', auth, user.logoutall)
 
-    app.get('/api/auth', auth, async(req, res) => {
-        // View logged in user profile
-        res.send(req.user)
-    })
-}
+router.get('/auth', auth, async (req, res) => {
+    // View logged in user profile
+    res.send(req.user)
+})
+
+module.exports = router

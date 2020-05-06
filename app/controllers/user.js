@@ -18,7 +18,7 @@ const login = async (req, res) => {
         const { email, password } = req.body
         const user = await User.findByCredentials(email, password)
         if (!user) {
-            return res.status(401).send({error: 'Login failed! Check authentication credentials'})
+            return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
         }
         const token = await user.generateAuthToken()
         res.send({ user, token })
@@ -41,7 +41,7 @@ const logout = async (req, res) => {
     }
 };
 
-const logoutall = async(req, res) => {
+const logoutall = async (req, res) => {
     // Log user out of all devices
     try {
         req.user.tokens.splice(0, req.user.tokens.length)
@@ -52,19 +52,19 @@ const logoutall = async(req, res) => {
     }
 };
 
-const verifyToken = async(req, res) => {
+const verifyToken = async (req, res) => {
     const appToken = req.header('Authorization').toLowerCase().replace('bearer ', '')
     const { token } = req.query; // SSO Token
-    
+
     if (appToken == null || token == null) {
         return res.status(400).json({ error: "Bad Request!" })
     }
 
     const user = await User.findOne({ 'tokens.token': token })
     if (!user) {
-        return res.status(401).send({error: 'Verify token failed'})
+        return res.status(401).send({ error: 'Verify token failed' })
     }
-    
+
 };
 
-module.exports = Object.assign({},{register, login, logout, logoutall});
+module.exports = Object.assign({}, { register, login, logout, logoutall });
