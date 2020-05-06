@@ -2,17 +2,14 @@ const auth = require('../middleware/auth')
 const broker = require('../controllers/broker')
 
 module.exports = (app) => {
-    app.post('/api/auth/register', user.register)
-    app.put('/api/auth', user.register) // alias?
+    app.get('/api/broker', broker.getAll)
 
-    app.post('/api/auth/login', user.login)
-    app.post('/api/auth/logout', auth, user.logout)
-    app.post('/api/auth/logoutall', auth, user.logoutall)
+    app.put('/api/broker', broker.create)
+    app.post('/api/broker', broker.create)
 
-    app.post('/api/auth/verifyToken', auth, )
+    app.get('/api/broker/:id', broker.getOne)
+    app.delete('/api/broker/:id', broker.remove)
+    app.patch('/api/broker/:id', broker.update)
 
-    app.get('/api/auth', auth, async(req, res) => {
-        // View logged in user profile
-        res.send(req.user)
-    })
+    app.patch('/api/broker/:id/token', broker.generateNewToken)
 }

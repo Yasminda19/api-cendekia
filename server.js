@@ -29,6 +29,7 @@ mongoose.connect(config.dburl, {
 // Require users routes
 // require('./app/routes/something')(app);
 require('./app/routes/user')(app);
+require('./app/routes/broker')(app);
 
 // define a simple route
 app.get('/', (req, res) => {
