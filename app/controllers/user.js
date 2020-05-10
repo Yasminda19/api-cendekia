@@ -1,6 +1,6 @@
 const User = require('../models/user');
 
-exports.register = async (req, res) => {
+const register = async (req, res) => {
     // Create a new user
     try {
         const user = new User(req.body)
@@ -12,13 +12,13 @@ exports.register = async (req, res) => {
     }
 };
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
     //Login a registered user
     try {
         const { email, password } = req.body
         const user = await User.findByCredentials(email, password)
         if (!user) {
-            return res.status(401).send({error: 'Login failed! Check authentication credentials'})
+            return res.status(401).send({ error: 'Login failed! Check authentication credentials' })
         }
         const token = await user.generateAuthToken()
         res.send({ user, token })
@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
 
 };
 
-exports.logout = async (req, res) => {
+const logout = async (req, res) => {
     // Log user out of the application
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
@@ -41,7 +41,7 @@ exports.logout = async (req, res) => {
     }
 };
 
-exports.logoutall = async(req, res) => {
+const logoutall = async (req, res) => {
     // Log user out of all devices
     try {
         req.user.tokens.splice(0, req.user.tokens.length)
@@ -51,3 +51,20 @@ exports.logoutall = async(req, res) => {
         res.status(500).send(error)
     }
 };
+
+const verifyToken = async (req, res) => {
+    const appToken = req.header('Authorization').toLowerCase().replace('bearer ', '')
+    const { token } = req.query; // SSO Token
+
+    if (appToken == null || token == null) {
+        return res.status(400).json({ error: "Bad Request!" })
+    }
+
+    const user = await User.findOne({ 'tokens.token': token })
+    if (!user) {
+        return res.status(401).send({ error: 'Verify token failed' })
+    }
+
+};
+
+module.exports = Object.assign({}, { register, login, logout, logoutall });

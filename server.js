@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 
 // create express app
 const app = express();
@@ -14,6 +15,13 @@ app.use(bodyParser.json())
 const config = require('./config');
 const mongoose = require('mongoose');
 
+// init session
+app.use(session({secret: config.secret, saveUninitialized: true,resave: true}));
+
+const user_api = require('./app/routes/user');
+const broker_api = require('./app/routes/broker');
+const sso = require('./app/routes/sso');
+
 mongoose.Promise = global.Promise;
 
 // Connecting to the database
@@ -26,12 +34,13 @@ mongoose.connect(config.dburl, {
     process.exit();
 });
 
-// Require users routes
-// require('./app/routes/something')(app);
-require('./app/routes/user')(app);
+mongoose.set('useFindAndModify', false);
 
-// define a simple route
-app.get('/', (req, res) => {
+app.use('/api', user_api);
+app.use('/api', broker_api);
+app.use('/sso', sso);
+
+app.get('/checkHealth', (req, res) => {
     res.json({"message": "connected."});
 });
 
