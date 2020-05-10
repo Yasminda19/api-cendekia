@@ -4,12 +4,9 @@ const Broker = require('../models/broker')
 const create = (req, res) => {
     try {
         const { name, url } = req.body
-        if (name === undefined || url === undefined)
-            throw { "message": "name or url can't be empty" }
-        if (!(url.startsWith('http://') || url.startsWith('https://')))
-            throw { "message": "url must start with http:// or https://" }
+        const parse_url = new URL(url);
         const token = uuid.v4()
-        const broker = new Broker({ name: name, url: url, token: token })
+        const broker = new Broker({ name: name, url: parse_url.origin, token: token })
         broker.save()
         res.json({ success: true, data: broker })
     } catch (err) {

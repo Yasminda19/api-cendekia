@@ -7,6 +7,6 @@ router.route('/login')
     .get(sso.login)
     .post(sso.doLogin)
 
-router.get("/verifyToken", sso.verifySsoToken)
+router.get("/verifyToken", sso.verifyToken)
 
 module.exports = router

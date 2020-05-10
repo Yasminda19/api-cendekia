@@ -6,13 +6,13 @@ const broker = require('../controllers/broker')
 
 router.route('/broker')
     .get(broker.getAll)
-    .put('/broker', broker.create)
-    .post('/broker', broker.create);
+    .put(broker.create)
+    .post(broker.create);
 
 router.route('/broker/:id')
-    .get('/broker/:id', broker.getOne)
-    .delete('/broker/:id', broker.remove)
-    .patch('/broker/:id', broker.update);
+    .get(broker.getOne)
+    .delete(broker.remove)
+    .patch(broker.update);
 
 router.patch('/broker/:id/token', broker.generateNewToken)
 
