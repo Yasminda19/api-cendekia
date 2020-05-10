@@ -1,15 +1,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const Eta = require('eta');
 
 // create express app
 const app = express();
 
 // parse requests of content-type
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse requests of content-type - application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+// static path
+app.use('/static', express.static('public'));
+
+// set frontned
+app.set('view engine', 'eta');
+app.set('views', './views');
 
 // Configuring the database
 const config = require('./config');

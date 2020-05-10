@@ -13,20 +13,29 @@ const login = async (req, res) => {
     const { url } = req.query; // redirect
 
     try {
-        const parse_url = new URL(url);
-        const broker = await Broker.findOne({ url: parse_url.origin }).exec();
-        if (!broker)
-            throw { code: "SSO21", message: "URL are not in-scope to access the SSO." };
-        if (req.session.user !== undefined && url == undefined)
-            return res.redirect("/"); // TODO: create main page to manage account
-        if (req.session.user !== undefined && url !== undefined) {
-            const ssoToken = uuid.v4();
-            client.set(`${broker.token}.${ssoToken}.origin`, parse_url.origin);
-            client.set(`${broker.token}.${ssoToken}.id`, req.session.user);
-            return res.redirect(`${url}?ssoToken=${ssoToken}`);
+        if (url !== undefined) {
+            const parse_url = new URL(url);
+            const broker = await Broker.findOne({ url: parse_url.origin }).exec();
+            if (!broker)
+                throw { code: "SSO21", message: "URL are not in-scope to access the SSO." };
+            if (req.session.user !== undefined && url == undefined)
+                return res.redirect("/"); // TODO: create main page to manage account
+            if (req.session.user !== undefined && url !== undefined) {
+                client.get(`${ssoToken}.id`, (err, id) => {
+                    if (err) throw err;
+                    if (id !== req.session.user)
+                        throw { code: "SSO22", message: "User mismatch." };
+                });
+                const ssoToken = uuid.v4();
+                client.set(`${ssoToken}.origin`, parse_url.origin);
+                client.set(`${ssoToken}.token`, broker.token);
+                // client.set(`${ssoToken}.id`, req.session.user);
+                return res.redirect(`${url}?ssoToken=${ssoToken}`);
+            }
+        } else {
+            return res.render("login-cendekia");
+            // res.json({ success: true });
         }
-        // return res.render("login");
-        res.json({ success: true });
     } catch (err) {
         res.json({ error: err });
     }
@@ -37,10 +46,12 @@ const doLogin = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        const parse_url = new URL(url);
-        const broker = await Broker.findOne({ url: parse_url.origin }).exec();
-        if (!broker)
-            throw { code: "SSO11", message: "URL are not in-scope to access the SSO." };
+        if (url !== undefined) {
+            const parse_url = new URL(url);
+            const broker = await Broker.findOne({ url: parse_url.origin }).exec();
+            if (!broker)
+                throw { code: "SSO11", message: "URL are not in-scope to access the SSO." };
+        }
         const user = await User.findOne({ email: email }).exec();
         if (!user)
             throw { code: "SSO12", message: "Unauthorized. Invalid Email or Password" };
@@ -50,9 +61,14 @@ const doLogin = async (req, res) => {
         const ssoToken = uuid.v4();
         const userID = uuid.v4();
         req.session.user = userID;
-        client.set(`${broker.token}.${ssoToken}.origin`, parse_url.origin);
-        client.set(`${broker.token}.${ssoToken}.id`, userID);
-        return res.redirect(`${url}?ssoToken=${ssoToken}`); // frontend
+        client.set(`${ssoToken}.id`, userID);
+        if (url !== undefined) {
+            client.set(`${ssoToken}.origin`, parse_url.origin);
+            client.set(`${ssoToken}.token`, broker.token);
+            return res.redirect(`${url}?ssoToken=${ssoToken}`); // frontend
+        } else {
+            return res.json({ success: true }); // TODO
+        }
     } catch (err) {
         res.json({ error: err });
     }
@@ -67,16 +83,19 @@ const verifyToken = async (req, res) => {
         const { ssoToken } = req.query;
         if (appToken === "")
             throw { code: "SSO01", message: "Missing application authorization token." };
-        const broker = await Broker.findOne({ token: appToken }).exec();
-        if (!broker)
-            throw { code: "SSO03", message: "Unauthorized. Invalid Broker token." };
-        client.get(`${appToken}.${ssoToken}.id`, (err, token) => {
+        client.get(`${ssoToken}.id`, (err, token) => {
             if (err)
                 throw { code: "SSO02", message: "Something went horribly wrong on our end." };
             if (token !== req.session.user)
                 throw { code: "SSO04", message: "Unauthorized. Invalid SSO token." };
         });
-        client.get(`${appToken}.${ssoToken}.origin`, (err, token) => {
+        client.get(`${ssoToken}.token`, (err, token) => {
+            if (err)
+                throw { code: "SSO02", message: "Something went horribly wrong on our end." };
+            if (token !== appToken)
+                throw { code: "SSO04", message: "Unauthorized. Invalid SSO token." };
+        });
+        client.get(`${ssoToken}.origin`, (err, token) => {
             if (err)
                 throw { code: "SSO02", message: "Something went horribly wrong on our end." };
             if (token !== parse_url.origin)

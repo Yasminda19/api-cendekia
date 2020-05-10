@@ -25,12 +25,15 @@ const userSchema = mongoose.Schema({
         required: true,
         minLength: 7
     },
-    tokens: [{
-        token: {
-            type: String,
-            required: true
+    role: {
+        type: String,
+        required: true,
+        default: "siswa",
+        validate: value => {
+            if (value !== "siswa" || value !== "guru")
+                throw new Error({ message: "Invalid Role" })
         }
-    }]
+    }
 })
 
 userSchema.pre('save', async function (next) {
@@ -41,17 +44,6 @@ userSchema.pre('save', async function (next) {
     }
     next()
 })
-
-userSchema.methods.generateAuthToken = async function () {
-    // Generate an auth token for the user
-    const user = this
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY, {
-        expiresIn: 60 * 15 // 15 minutes
-    })
-    user.tokens = user.tokens.concat({ token })
-    await user.save()
-    return token
-}
 
 userSchema.statics.findByCredentials = async (email, password) => {
     // Search for a user by email and password.
