@@ -11,6 +11,10 @@ const { genJsonWebToken } = require('./jwt');
 const client = redis.createClient(redisUrl);
 const getAsync = promisify(client.get).bind(client);
 
+const register = async (req, res) => {
+    return res.render("register");
+};
+
 const login = async (req, res) => {
     const { url } = req.query; // redirect
 
@@ -126,4 +130,4 @@ const verifyToken = async (req, res) => {
     }
 };
 
-module.exports = Object.assign({}, { login, doLogin, verifyToken, logout });
+module.exports = Object.assign({}, { register, login, doLogin, verifyToken, logout });

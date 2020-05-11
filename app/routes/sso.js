@@ -7,6 +7,9 @@ router.route('/login')
     .get(sso.login)
     .post(sso.doLogin);
 
+router.route('/register')
+    .get(sso.register);
+
 router.get("/verifyToken", sso.verifyToken);
 
 router.get("/logout", sso.logout)

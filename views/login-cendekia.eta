@@ -49,7 +49,7 @@
               <a href="forgot-pass.html">Lupa Password</a>
             </div>
             <div class="form-group mt-3">
-              <a href="register.html">Belum Daftar? Daftar Disini</a>
+              <a href="/sso/register">Belum Daftar? Daftar Disini</a>
             </div>
           </form>
 

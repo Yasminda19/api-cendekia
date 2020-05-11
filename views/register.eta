@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="bg">
+    <div class="box">
+      <div class="banner-register" style="color: #01532F;">
+        <img src="https://i.ibb.co/85zTGTc/image-2.png" alt="logo">
+      </div>
+      <div class="login-box">
+        <form action="/api/auth/register" method="POST">
+          <div class="form-group">
+            <div class="form-group mb-2">
+              <a style="color:#000">NIK/NIS/username</a>
+            </div>
+            <input type="text" class="form-control" id="InputName" placeholder="Enter NIK/NIS/username" name="name">
+          </div>
+          <div class="form-group">
+            <div class="form-group mb-2">
+              <a style="color:#000">Email Address</a>
+            </div>
+            <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp"
+              placeholder="Enter email" name="email">
+          </div>
+          <div class="form-group">
+            <div class="form-group mb-2">
+              <a style="color:#000" mb-2 pd-2>Password</a>
+            </div>
+            <input type="password" class="form-control" id="InputPassword" placeholder="Password" name="password">
+          </div>
+          <!-- Select Tipe-->
+          <div class="form-group">
+            <div class="form-group mb-2">
+              <a style="color:#000" mb-2 pd-2>Role</a>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="role" id="inlineRadio1" value="siswa">
+              <label class="text-dark form-check-label" for="inlineRadio1">Siswa</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="role" id="inlineRadio2" value="guru">
+              <label class="text-dark form-check-label" for="inlineRadio2">Guru</label>
+            </div>
+          </div>
+          <button type="submit" class="block">Daftar</button>
+          <div class="form-group mt-3">
+            <a href="/sso/login">Sudah Daftar? Masuk Disini</a>
+          </div>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
