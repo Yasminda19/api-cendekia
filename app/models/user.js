@@ -27,11 +27,6 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
         required: true,
-        default: "siswa",
-        validate: value => {
-            if (value !== "siswa" || value !== "guru")
-                throw new Error({ error: "Invalid Role" })
-        }
     }
 })
 
