@@ -26,8 +26,9 @@ const mongoose = require('mongoose');
 // init session
 app.use(session({secret: config.secret, saveUninitialized: true,resave: true}));
 
-const user_api = require('./app/routes/user');
-const broker_api = require('./app/routes/broker');
+const user_api = require('./app/routes/api/user');
+const broker_api = require('./app/routes/api/broker');
+const broker = require('./app/routes/broker');
 const sso = require('./app/routes/sso');
 
 mongoose.Promise = global.Promise;
@@ -47,6 +48,7 @@ mongoose.set('useFindAndModify', false);
 app.use('/api', user_api);
 app.use('/api', broker_api);
 app.use('/sso', sso);
+app.use('/', broker);
 
 app.get('/checkHealth', (req, res) => {
     res.json({"message": "connected."});

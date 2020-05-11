@@ -69,4 +69,13 @@ const getAll = async (req, res) => {
     }
 }
 
-module.exports = Object.assign({}, { create, remove, update, getOne, getAll, generateNewToken });
+const brokerView = async (req, res) => {
+    try {
+        const brokers = await Broker.find({}).exec();
+        res.render("broker", { brokers: brokers });
+    } catch (err) {
+        res.status(502).json(err);
+    }
+};
+
+module.exports = Object.assign({}, { create, remove, update, getOne, getAll, generateNewToken, brokerView });
