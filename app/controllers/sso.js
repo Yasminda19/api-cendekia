@@ -118,7 +118,7 @@ const verifyToken = async (req, res) => {
             name: user.name,
             role: user.role
         };
-        return res.json({ success: true, token: genJsonWebToken(payload) });
+        return res.json({ success: true, token: await genJsonWebToken(payload) });
     } catch (err) {
         res.json({ error: err });
     }
