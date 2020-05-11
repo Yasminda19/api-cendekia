@@ -9,7 +9,7 @@ const genJsonWebToken = payload =>
             {
                 algorithm: "RS256", // use asymmetric encription
                 expiresIn: "1h",
-                issuer: "SSO Insan Cendekia Baznas"
+                issuer: "Insan Cendekia Baznas"
             },
             (err, token) => {
                 if (err) return reject(err);

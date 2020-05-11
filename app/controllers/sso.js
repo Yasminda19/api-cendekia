@@ -26,7 +26,7 @@ const login = async (req, res) => {
                 client.set(`${ssoToken}.token`, broker.token, 'EX', 3600);
                 return res.redirect(`${url}?ssoToken=${ssoToken}`);
             } else {
-                return res.render("login-cendekia");
+                return res.render("login-cendekia", { url: url });
             }
         } else {
             return res.render("login-cendekia");
@@ -75,7 +75,7 @@ const logout = async (req, res) => {
     try {
         if (req.session.user !== undefined) {
             client.del(`user.${req.session.user}`);
-            req.session.destroy();`${ssoToken}.token`
+            req.session.destroy(); `${ssoToken}.token`
         }
         return res.redirect('/sso/login');
     } catch (err) {
@@ -110,13 +110,15 @@ const verifyToken = async (req, res) => {
             });
         if (!email)
             return res.status(502).json({ code: "SSO04", message: "Unauthorized. Invalid SSO token." });
-        const user = User.findOne({ email: email }).exec();
+        const user = await User.findOne({ email: email }).exec();
         if (!user)
             return res.status(502).json({ code: "SSO06", message: "Unauthorized. User not found." });
         const payload = {
-            email: email,
-            name: user.name,
-            role: user.role
+            ...{
+                email: email,
+                name: user.name,
+                role: user.role
+            }
         };
         return res.json({ success: true, token: await genJsonWebToken(payload) });
     } catch (err) {

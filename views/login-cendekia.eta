@@ -21,7 +21,11 @@
         <img src="https://i.ibb.co/85zTGTc/image-2.png" alt="logo">
       </div>
         <div class="login-box">
+          <% if (it.url === undefined) { %>
           <form action="/sso/login" method="POST">
+          <% } else { %>
+          <form action="/sso/login?url=<%= it.url %>" method="POST">
+          <% } %>
             <div class="form-group">
               <div class="form-group mb-2">
               <a style="color:#000">Email Address</a>
