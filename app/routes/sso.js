@@ -5,8 +5,10 @@ const sso = require('../controllers/sso')
 
 router.route('/login')
     .get(sso.login)
-    .post(sso.doLogin)
+    .post(sso.doLogin);
 
-router.get("/verifyToken", sso.verifyToken)
+router.get("/verifyToken", sso.verifyToken);
+
+router.get("/logout", sso.logout)
 
 module.exports = router

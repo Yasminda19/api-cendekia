@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 
 const userSchema = mongoose.Schema({
     name: {
@@ -31,7 +30,7 @@ const userSchema = mongoose.Schema({
         default: "siswa",
         validate: value => {
             if (value !== "siswa" || value !== "guru")
-                throw new Error({ message: "Invalid Role" })
+                throw new Error({ error: "Invalid Role" })
         }
     }
 })
