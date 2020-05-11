@@ -1,13 +1,13 @@
 const uuid = require('uuid');
 const Broker = require('../models/broker')
 
-const create = (req, res) => {
+const create = async (req, res) => {
     try {
         const { name, url } = req.body
         const parse_url = new URL(url);
         const token = uuid.v4()
         const broker = new Broker({ name: name, url: parse_url.origin, token: token })
-        broker.save()
+        await broker.save()
         res.json({ success: true, data: broker })
     } catch (err) {
         res.status(500).json({ success: false, error: err })

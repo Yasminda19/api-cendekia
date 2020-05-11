@@ -43,7 +43,7 @@ const auth = async (req, res, next) => {
 
     if (ssoToken !== undefined) {
         try {
-            const response = await fetch(`http://localhost:3000/sso/verifyToken?ssoToken=${ssoToken}`, {
+            const response = await fetch(`http://sso.kato.studio/sso/verifyToken?ssoToken=${ssoToken}`, {
                 method: "get",
                 headers: {
                     "Authorization": `Bearer ${appToken}`
@@ -63,7 +63,7 @@ const auth = async (req, res, next) => {
 const checkAuth = async (req, res, next) => {
     const redirectURL = `${req.protocol}://${req.headers.host}${req.path}`;
     if (req.session.user === undefined) {
-        return res.redirect(`http://localhost:3000/sso/login?url=${redirectURL}`);
+        return res.redirect(`http://sso.kato.studio/sso/login?url=${redirectURL}`);
     }
     return next();
 };
