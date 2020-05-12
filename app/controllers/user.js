@@ -78,7 +78,7 @@ const getUsers = async (req, res) => {
         const broker = await Broker.findOne({ token: appToken }).exec();
         if (!broker)
             return res.status(401).json({ status: false, message: "Unauthorized." });
-        if (q === undefined)
+        if (query === undefined)
             const searchParam = {};
         else 
             const searchParam = JSON.parse(query);

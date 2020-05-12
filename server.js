@@ -54,6 +54,14 @@ app.get('/checkHealth', (req, res) => {
     res.json({"message": "connected."});
 });
 
+app.get('/', (req, res) => {
+    if (req.session.user === undefined)
+        return res.redirect('/sso/login');
+    client.get(`user.${req.session.user}`, (err, email) => {
+        return res.send(`Hello ${email}. <a href="/sso/logout">Logout.</a>`);
+    });
+});
+
 // listen for requests
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
