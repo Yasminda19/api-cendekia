@@ -1,13 +1,34 @@
-#auth
+## API
 
-1. login
-*POST /api/auth/login*
+### sso
+1. verify token
+    - *GET /sso/verifyToken?ssoToken=token*
 
+### broker
+broker management
+
+1. add broker
+    - *POST /api/broker*
+    - param: `name` `url`
+2. delete broker
+    - *DELETE /api/broker/{id}*
+3. update broker
+    - *PATCH /api/broker/{id}*
+    - param: `name` `url`
+4. list broker
+    - *GET /api/broker*
+
+### auth
+buat register dan list user
+
+1. login (jangan dipake)
+    - *POST /api/auth/login*
+    - param: `email` `password`
 2. register
-*POST /api/auth/register*
-
-2. logout
-*GET /api/auth/logout*
+    - *POST /api/auth/register*
+    - - param: `email` `password` `role` `name`
+2. logout (jangan dipake)
+    - *GET /api/auth/logout*
 
 wait did they actually are going to use this, arent we supposed to have different non integrated app as modules thingg
 wait i just realised they actually call that miniscule service.
