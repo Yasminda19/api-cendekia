@@ -67,7 +67,7 @@ const doLogin = async (req, res) => {
             client.set(`${ssoToken}.token`, broker.token, 'EX', 3600);
             return res.redirect(`${url}?ssoToken=${ssoToken}`); // frontend
         } else {
-            return res.json({ success: true }); // TODO
+            return res.json({ success: true, token: ssoToken });
         }
     } catch (err) {
         res.json({ error: err });
