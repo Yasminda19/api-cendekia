@@ -22,6 +22,8 @@ app.set('views', './views');
 // Configuring the database
 const config = require('./config');
 const mongoose = require('mongoose');
+const redis = require('redis');
+const client = redis.createClient(config.redisUrl);
 
 // init session
 app.use(session({secret: config.secret, saveUninitialized: true,resave: true}));
