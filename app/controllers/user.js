@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Broker = require('../models/broker');
 
 const register = async (req, res) => {
     // Create a new user
@@ -67,4 +68,25 @@ const verifyToken = async (req, res) => {
 
 };
 
-module.exports = Object.assign({}, { register, login, logout, logoutall });
+const getUsers = async (req, res) => {
+    try {
+        const query = req.query.q;
+        const authHeader = req.headers["authorization"];
+        if (authHeader === undefined || typeof authHeader !== "string")
+            throw { code: "SSO01", message: "Missing application authorization token." };
+        const appToken = authHeader.slice(7); // strip "Bearer " from auth header
+        const broker = await Broker.findOne({ token: appToken }).exec();
+        if (!broker)
+            return res.status(401).json({ status: false, message: "Unauthorized." });
+        if (q === undefined)
+            const searchParam = {};
+        else 
+            const searchParam = JSON.parse(query);
+        const users = await User.find(searchParam).exec();
+        res.json({ success: true, data: users });
+    } catch (err) {
+        res.status(502).json({ error: err })
+    }
+}
+
+module.exports = Object.assign({}, { register, login, logout, logoutall, getUsers });
