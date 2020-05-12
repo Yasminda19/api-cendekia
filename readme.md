@@ -3,6 +3,7 @@
 ### sso
 1. verify token
     - *GET /sso/verifyToken?ssoToken=token*
+    - header: `Authorization: Bearer brokertoken`
 
 ### broker
 broker management
@@ -26,9 +27,15 @@ buat register dan list user
     - param: `email` `password`
 2. register
     - *POST /api/auth/register*
-    - - param: `email` `password` `role` `name`
-2. logout (jangan dipake)
+    - param: `email` `password` `role` `name`
+3. logout (jangan dipake)
     - *GET /api/auth/logout*
+4. list
+    - *GET /api/auth*
+    - header: `Authorization: Bearer brokertoken`
+5. search
+    - *GET /api/auth?q={"role": "pembina"}*
+    - header: `Authorization: Bearer brokertoken`
 
 wait did they actually are going to use this, arent we supposed to have different non integrated app as modules thingg
 wait i just realised they actually call that miniscule service.
