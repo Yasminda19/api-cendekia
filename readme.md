@@ -8,6 +8,9 @@
 ### broker
 broker management
 
+To add your broker insert here:
+https://sso.kato.studio/broker
+
 1. add broker
     - *POST /api/broker*
     - param: `name` `url`
