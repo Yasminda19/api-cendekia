@@ -8,7 +8,7 @@
 ### broker
 broker management
 
-To add your broker insert here:
+Broker management interface :
 https://sso.kato.studio/broker
 
 1. add broker
