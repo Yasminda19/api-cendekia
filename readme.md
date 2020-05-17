@@ -25,14 +25,14 @@ https://sso.kato.studio/broker
 ### auth
 buat register dan list user
 
-1. login (jangan dipake)
+1. login 
     - *POST /api/auth/login*
     - param: `email` `password`
 2. register
     - *POST /api/auth/register*
     - param: `email` `password` `role` `name`
-3. logout (jangan dipake)
-    - *GET /api/auth/logout*
+3. logout 
+    - *GET /api/sso/logout
 4. list
     - *GET /api/auth*
     - header: `Authorization: Bearer brokertoken`
