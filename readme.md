@@ -32,7 +32,7 @@ buat register dan list user
     - *POST /api/auth/register*
     - param: `email` `password` `role` `name`
 3. logout 
-    - *GET /api/sso/logout
+    - *GET /api/sso/logout*
 4. list
     - *GET /api/auth*
     - header: `Authorization: Bearer brokertoken`
